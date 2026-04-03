@@ -5,7 +5,7 @@ import Layout from './components/Layout';
 import Login from './pages/Login';
 import Dashboard from './pages/Dashboard';
 import Expenses from './pages/Expenses';
-import Income from './pages/Income';
+import Available from './pages/Available';
 import Budget from './pages/Budget';
 import Charts from './pages/Charts';
 import Settings from './pages/Settings';
@@ -36,7 +36,7 @@ export default function App() {
             <Route element={<PrivateRoute><Layout /></PrivateRoute>}>
               <Route path="/" element={<Dashboard />} />
               <Route path="/expenses" element={<Expenses />} />
-              <Route path="/income" element={<Income />} />
+              <Route path="/available" element={<Available />} />
               <Route path="/budget" element={<Budget />} />
               <Route path="/charts" element={<Charts />} />
               <Route path="/settings" element={<Settings />} />

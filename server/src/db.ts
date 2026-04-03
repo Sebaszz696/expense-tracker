@@ -19,6 +19,7 @@ db.exec(`
     email TEXT UNIQUE NOT NULL,
     password TEXT NOT NULL,
     monthly_income REAL DEFAULT 0,
+    available_balance REAL DEFAULT 0,
     currency TEXT DEFAULT 'COP',
     created_at DATETIME DEFAULT CURRENT_TIMESTAMP
   );
@@ -55,6 +56,24 @@ db.exec(`
     created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
   );
+
+  CREATE TABLE IF NOT EXISTS fixed_expenses (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    user_id INTEGER NOT NULL,
+    description TEXT NOT NULL,
+    amount REAL NOT NULL,
+    category_id INTEGER,
+    created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,
+    FOREIGN KEY (category_id) REFERENCES categories(id) ON DELETE SET NULL
+  );
 `);
+
+// Migración: Agregar columna available_balance si no existe
+try {
+  db.prepare('ALTER TABLE users ADD COLUMN available_balance REAL DEFAULT 0').run();
+} catch (e) {
+  // Columna ya existe, ignorar
+}
 
 export default db;

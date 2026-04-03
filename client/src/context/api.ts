@@ -58,4 +58,20 @@ export const api = {
     request<any>('/api/income', { method: 'POST', body: JSON.stringify(data) }),
   deleteIncome: (id: number) =>
     request<any>(`/api/income/${id}`, { method: 'DELETE' }),
+
+  // Available Balance
+  getAvailable: () => request<any>('/api/available'),
+  updateAvailable: (amount: number) =>
+    request<any>('/api/available', { method: 'PUT', body: JSON.stringify({ amount }) }),
+  addAvailable: (amount: number) =>
+    request<any>('/api/available/add', { method: 'POST', body: JSON.stringify({ amount }) }),
+
+  // Fixed Expenses
+  getFixedExpenses: () => request<any[]>('/api/fixed-expenses'),
+  createFixedExpense: (data: any) =>
+    request<any>('/api/fixed-expenses', { method: 'POST', body: JSON.stringify(data) }),
+  updateFixedExpense: (id: number, data: any) =>
+    request<any>(`/api/fixed-expenses/${id}`, { method: 'PUT', body: JSON.stringify(data) }),
+  deleteFixedExpense: (id: number) =>
+    request<any>(`/api/fixed-expenses/${id}`, { method: 'DELETE' }),
 };

@@ -8,7 +8,7 @@ import {
 const navItems = [
   { path: '/', icon: LayoutDashboard, label: 'Dashboard' },
   { path: '/expenses', icon: Receipt, label: 'Gastos' },
-  { path: '/income', icon: Wallet, label: 'Ingresos' },
+  { path: '/available', icon: Wallet, label: 'Disponible' },
   { path: '/budget', icon: PiggyBank, label: 'Presupuesto' },
   { path: '/charts', icon: BarChart3, label: 'Gráficas' },
   { path: '/settings', icon: Settings, label: 'Ajustes' },
@@ -25,8 +25,8 @@ export default function Layout() {
       <aside className="hidden md:flex flex-col w-64 bg-white dark:bg-dark-900 border-r border-gray-200 dark:border-dark-700 fixed h-full z-30">
         <div className="p-6 border-b border-gray-200 dark:border-dark-700">
           <h1 className="text-xl font-bold text-primary-600 dark:text-primary-400 flex items-center gap-2">
-            <PiggyBank className="w-7 h-7" />
-            MisGastos
+            <span className="w-7 h-7 flex items-center justify-center bg-cyan-500 text-white rounded-lg font-bold text-sm">AG</span>
+            AhoraGasto
           </h1>
           <p className="text-sm text-gray-500 dark:text-dark-400 mt-1">Hola, {user?.name}</p>
         </div>
@@ -60,8 +60,8 @@ export default function Layout() {
       {/* Mobile Header */}
       <div className="md:hidden fixed top-0 left-0 right-0 h-16 bg-white dark:bg-dark-900 border-b border-gray-200 dark:border-dark-700 flex items-center justify-between px-4 z-40">
         <h1 className="text-lg font-bold text-primary-600 dark:text-primary-400 flex items-center gap-2">
-          <PiggyBank className="w-6 h-6" />
-          MisGastos
+          <span className="w-6 h-6 flex items-center justify-center bg-cyan-500 text-white rounded text-xs font-bold">AG</span>
+          AhoraGasto
         </h1>
         <button onClick={() => setMobileOpen(!mobileOpen)} className="p-2 text-gray-600 dark:text-dark-300">
           {mobileOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}

@@ -14,9 +14,11 @@ export default function Dashboard() {
   const [month, setMonth] = useState(now.getMonth() + 1);
   const [year, setYear] = useState(now.getFullYear());
   const [summary, setSummary] = useState<Summary | null>(null);
+  const [available, setAvailable] = useState(0);
 
   useEffect(() => {
     api.getSummary(month, year).then(setSummary);
+    api.getAvailable().then(data => setAvailable(data.available_balance));
   }, [month, year]);
 
   const prevMonth = () => {
@@ -53,14 +55,15 @@ export default function Dashboard() {
 
       {/* Summary Cards */}
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-        <div className="bg-white dark:bg-dark-800 rounded-2xl p-5 shadow-sm">
+        <div className="bg-gradient-to-br from-cyan-50 to-cyan-100 dark:from-cyan-950/40 dark:to-cyan-900/40 rounded-2xl p-5 shadow-sm border-2 border-cyan-200 dark:border-cyan-800">
           <div className="flex items-center gap-2 mb-3">
-            <div className="p-2 bg-green-100 dark:bg-green-950/50 rounded-xl">
-              <TrendingUp className="w-5 h-5 text-green-600 dark:text-green-400" />
+            <div className="p-2 bg-cyan-200 dark:bg-cyan-900 rounded-xl">
+              <Wallet className="w-5 h-5 text-cyan-600 dark:text-cyan-400" />
             </div>
-            <span className="text-sm text-gray-500 dark:text-dark-400">Ingresos</span>
+            <span className="text-sm font-semibold text-cyan-700 dark:text-cyan-300">💰 DISPONIBLE</span>
           </div>
-          <p className="text-lg font-bold text-gray-900 dark:text-white">{formatCOP(summary.totalIncome)}</p>
+          <p className="text-2xl font-bold text-cyan-900 dark:text-cyan-100">{formatCOP(available)}</p>
+          <p className="text-xs text-cyan-600 dark:text-cyan-300 mt-1">Lo que tienes ahora</p>
         </div>
         <div className="bg-white dark:bg-dark-800 rounded-2xl p-5 shadow-sm">
           <div className="flex items-center gap-2 mb-3">
@@ -74,22 +77,22 @@ export default function Dashboard() {
         <div className="bg-white dark:bg-dark-800 rounded-2xl p-5 shadow-sm">
           <div className="flex items-center gap-2 mb-3">
             <div className="p-2 bg-blue-100 dark:bg-blue-950/50 rounded-xl">
-              <Wallet className="w-5 h-5 text-blue-600 dark:text-blue-400" />
+              <TrendingUp className="w-5 h-5 text-blue-600 dark:text-blue-400" />
             </div>
-            <span className="text-sm text-gray-500 dark:text-dark-400">Balance</span>
+            <span className="text-sm text-gray-500 dark:text-dark-400">Ingresos (mes)</span>
           </div>
-          <p className={`text-lg font-bold ${summary.balance >= 0 ? 'text-green-600 dark:text-green-400' : 'text-red-600 dark:text-red-400'}`}>
-            {formatCOP(summary.balance)}
-          </p>
+          <p className="text-lg font-bold text-gray-900 dark:text-white">{formatCOP(summary.totalIncome)}</p>
         </div>
         <div className="bg-white dark:bg-dark-800 rounded-2xl p-5 shadow-sm">
           <div className="flex items-center gap-2 mb-3">
             <div className="p-2 bg-purple-100 dark:bg-purple-950/50 rounded-xl">
               <PiggyBank className="w-5 h-5 text-purple-600 dark:text-purple-400" />
             </div>
-            <span className="text-sm text-gray-500 dark:text-dark-400">Usado</span>
+            <span className="text-sm text-gray-500 dark:text-dark-400">Restante (mes)</span>
           </div>
-          <p className="text-lg font-bold text-gray-900 dark:text-white">{usagePercent.toFixed(0)}%</p>
+          <p className={`text-lg font-bold ${(available - summary.totalExpenses) >= 0 ? 'text-green-600 dark:text-green-400' : 'text-red-600 dark:text-red-400'}`}>
+            {formatCOP(available - summary.totalExpenses)}
+          </p>
         </div>
       </div>
 

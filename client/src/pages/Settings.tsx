@@ -86,7 +86,7 @@ export default function Settings() {
 
         <div>
           <label className="block text-sm font-medium text-gray-700 dark:text-dark-300 mb-1.5">
-            Ingreso Mensual (COP)
+            Salario Mensual — Incrementos de Disponible (COP)
           </label>
           <div className="relative">
             <span className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400">$</span>
@@ -118,7 +118,7 @@ export default function Settings() {
       <div className="bg-white dark:bg-dark-800 rounded-2xl p-6 shadow-sm">
         <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-2">Acerca de</h3>
         <p className="text-sm text-gray-500 dark:text-dark-400">
-          MisGastos v1.0 — Tu control de finanzas personales.
+          AhoraGasto v1.0 — Tu control de gastos personales.
         </p>
         <p className="text-sm text-gray-500 dark:text-dark-400 mt-1">
           Moneda: COP (Pesos Colombianos)

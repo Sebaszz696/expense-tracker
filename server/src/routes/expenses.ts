@@ -12,7 +12,7 @@ router.get('/', (req: AuthRequest, res: Response) => {
   const params: any[] = [req.userId!];
 
   if (month && year) {
-    query += ' AND strftime("%m", e.date) = ? AND strftime("%Y", e.date) = ?';
+    query += " AND strftime('%m', e.date) = ? AND strftime('%Y', e.date) = ?";
     params.push(String(month).padStart(2, '0'), String(year));
   }
 
@@ -35,14 +35,14 @@ router.get('/summary', (req: AuthRequest, res: Response) => {
 
   const totalExpenses = db.prepare(
     `SELECT COALESCE(SUM(amount), 0) as total FROM expenses
-     WHERE user_id = ? AND strftime("%m", date) = ? AND strftime("%Y", date) = ?`
+     WHERE user_id = ? AND strftime('%m', date) = ? AND strftime('%Y', date) = ?`
   ).get(req.userId!, paddedMonth, String(currentYear)) as any;
 
   const byCategory = db.prepare(
     `SELECT c.id, c.name, c.icon, c.color, c.budget_limit, COALESCE(SUM(e.amount), 0) as total
      FROM categories c
      LEFT JOIN expenses e ON e.category_id = c.id
-       AND strftime("%m", e.date) = ? AND strftime("%Y", e.date) = ?
+       AND strftime('%m', e.date) = ? AND strftime('%Y', e.date) = ?
      WHERE c.user_id = ?
      GROUP BY c.id
      ORDER BY total DESC`
@@ -50,7 +50,7 @@ router.get('/summary', (req: AuthRequest, res: Response) => {
 
   const dailyExpenses = db.prepare(
     `SELECT date, SUM(amount) as total FROM expenses
-     WHERE user_id = ? AND strftime("%m", date) = ? AND strftime("%Y", date) = ?
+     WHERE user_id = ? AND strftime('%m', date) = ? AND strftime('%Y', date) = ?
      GROUP BY date ORDER BY date`
   ).all(req.userId!, paddedMonth, String(currentYear));
 
@@ -58,7 +58,7 @@ router.get('/summary', (req: AuthRequest, res: Response) => {
 
   const totalIncome = db.prepare(
     `SELECT COALESCE(SUM(amount), 0) as total FROM income_records
-     WHERE user_id = ? AND strftime("%m", date) = ? AND strftime("%Y", date) = ?`
+     WHERE user_id = ? AND strftime('%m', date) = ? AND strftime('%Y', date) = ?`
   ).get(req.userId!, paddedMonth, String(currentYear)) as any;
 
   res.json({
