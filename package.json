@@ -1,0 +1,18 @@
+{
+  "name": "ahoragasto",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev:client": "cd client && npx vite --host",
+    "dev:server": "cd server && npx tsx watch src/index.ts",
+    "dev": "concurrently \"npm run dev:server\" \"npm run dev:client\"",
+    "build:client": "cd client && npx vite build",
+    "build:server": "cd server && npx tsc",
+    "build": "npm run build:client && npm run build:server",
+    "start": "node server/dist/index.js",
+    "postinstall": "cd client && npm install && cd ../server && npm install"
+  },
+  "devDependencies": {
+    "concurrently": "^8.2.2"
+  }
+}
